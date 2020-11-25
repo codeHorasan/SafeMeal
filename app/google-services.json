@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1094819138843",
+    "firebase_url": "https://safemealdeneme.firebaseio.com",
+    "project_id": "safemealdeneme",
+    "storage_bucket": "safemealdeneme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094819138843:android:df37717abacf0832e617be",
+        "android_client_info": {
+          "package_name": "com.ugur.safemealdeneme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094819138843-611sr2fufohdsclalk8bp390km900m2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5llT7RV2iBE3Te_F1f70n6FzQD9M4mp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094819138843-611sr2fufohdsclalk8bp390km900m2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
