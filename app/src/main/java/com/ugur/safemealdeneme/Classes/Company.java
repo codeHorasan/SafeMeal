@@ -9,12 +9,14 @@ public class Company {
     String name;
     String UUID;
     ArrayList<Department> departmentList;
+    ArrayList<Menu> menuList;
     Uri imageUri;
 
     private static Company company;
 
     private Company() {
         departmentList = new ArrayList<>();
+        menuList = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -47,6 +49,14 @@ public class Company {
 
     public void setDepartmentList(ArrayList<Department> departmentList) {
         this.departmentList = departmentList;
+    }
+
+    public ArrayList<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(ArrayList<Menu> menuList) {
+        this.menuList = menuList;
     }
 
     public Uri getImageUri() {

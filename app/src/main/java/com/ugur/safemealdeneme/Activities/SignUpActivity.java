@@ -91,11 +91,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private String getFileExtension(Uri uri) {
+    /*private String getFileExtension(Uri uri) {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
+    }*/
 
     private boolean validateEmail() {
         String emailInput = emailText.getEditText().getText().toString().trim();
