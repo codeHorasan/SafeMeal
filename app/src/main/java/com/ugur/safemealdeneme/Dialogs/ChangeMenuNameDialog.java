@@ -15,60 +15,46 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ugur.safemealdeneme.Classes.Company;
-import com.ugur.safemealdeneme.Classes.Menu;
 import com.ugur.safemealdeneme.Fragments.MenuFragment;
 import com.ugur.safemealdeneme.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
-public class MenuCreationDialog extends AppCompatDialogFragment {
+public class ChangeMenuNameDialog extends AppCompatDialogFragment {
     private TextInputLayout nameInput;
+    private String uuid;
+
+    public ChangeMenuNameDialog(String uuid) {
+        this.uuid = uuid;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_menu_creation, null);
+        View view = inflater.inflate(R.layout.dialog_change_menu_name, null);
 
         builder.setView(view)
-                .setTitle("Create Menu")
+                .setTitle("Change Menu Name")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Change", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = nameInput.getEditText().getText().toString().trim();
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
-                        String currentDateTime = sdf.format(new Date());
-                        Menu menu = new Menu(name);
-                        menu.setDateString(currentDateTime);
-                        try {
-                            menu.setCreationDate(sdf.parse(currentDateTime));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        Company.getInstance().getMenuList().add(menu);
-
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                         reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus")
-                                .child(menu.getUuid()).child("Name").setValue(menu.getName());
-
-                        reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus")
-                                .child(menu.getUuid()).child("DateTime").setValue(menu.getDateString());
+                                .child(uuid).child("Name").setValue(name);
 
                         MenuFragment.loadMenus(MenuFragment.view);
                     }
                 });
 
-        nameInput = view.findViewById(R.id.dialog_text_menu_name);
+        nameInput = view.findViewById(R.id.dialog_text_change_menu_name);
 
         return builder.create();
     }

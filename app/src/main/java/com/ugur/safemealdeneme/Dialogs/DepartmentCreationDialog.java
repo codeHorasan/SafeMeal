@@ -15,7 +15,9 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ugur.safemealdeneme.Classes.Company;
+import com.ugur.safemealdeneme.Classes.Department;
 import com.ugur.safemealdeneme.Classes.Menu;
+import com.ugur.safemealdeneme.Fragments.DepartmentFragment;
 import com.ugur.safemealdeneme.Fragments.MenuFragment;
 import com.ugur.safemealdeneme.R;
 
@@ -24,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class MenuCreationDialog extends AppCompatDialogFragment {
+public class DepartmentCreationDialog extends AppCompatDialogFragment {
     private TextInputLayout nameInput;
 
     @NonNull
@@ -32,10 +34,10 @@ public class MenuCreationDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_menu_creation, null);
+        View view = inflater.inflate(R.layout.dialog_department_creation, null);
 
         builder.setView(view)
-                .setTitle("Create Menu")
+                .setTitle("Create Department")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -48,27 +50,27 @@ public class MenuCreationDialog extends AppCompatDialogFragment {
                         String name = nameInput.getEditText().getText().toString().trim();
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
                         String currentDateTime = sdf.format(new Date());
-                        Menu menu = new Menu(name);
-                        menu.setDateString(currentDateTime);
+                        Department department = new Department(name);
+                        department.setDateString(currentDateTime);
                         try {
-                            menu.setCreationDate(sdf.parse(currentDateTime));
+                            department.setCreationDate(sdf.parse(currentDateTime));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        Company.getInstance().getMenuList().add(menu);
+                        Company.getInstance().getDepartmentList().add(department);
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-                        reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus")
-                                .child(menu.getUuid()).child("Name").setValue(menu.getName());
+                        reference.child("Companies").child(Company.getInstance().getUUID()).child("Departments")
+                                .child(department.getUuid()).child("Name").setValue(department.getName());
 
-                        reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus")
-                                .child(menu.getUuid()).child("DateTime").setValue(menu.getDateString());
+                        reference.child("Companies").child(Company.getInstance().getUUID()).child("Departments")
+                                .child(department.getUuid()).child("DateTime").setValue(department.getDateString());
 
-                        MenuFragment.loadMenus(MenuFragment.view);
+                        DepartmentFragment.loadDepartments(DepartmentFragment.view);
                     }
                 });
 
-        nameInput = view.findViewById(R.id.dialog_text_menu_name);
+        nameInput = view.findViewById(R.id.dialog_text_department_name);
 
         return builder.create();
     }

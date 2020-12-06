@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +23,9 @@ import com.ugur.safemealdeneme.Classes.Company;
 import com.ugur.safemealdeneme.Classes.Menu;
 import com.ugur.safemealdeneme.Classes.MenuRowItem;
 import com.ugur.safemealdeneme.Classes.MenuRowItemAdapter;
+import com.ugur.safemealdeneme.Dialogs.ChangeMenuNameDialog;
 import com.ugur.safemealdeneme.Dialogs.MenuCreationDialog;
 import com.ugur.safemealdeneme.R;
-import com.ugur.safemealdeneme.Classes.MenuRowItemAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 
 public class MenuFragment extends Fragment {
     FloatingActionButton floatingActionButton;
+    private static TextView noMenuText;
     static RecyclerView recyclerView;
     static RecyclerView.Adapter adapter;
     static RecyclerView.LayoutManager manager;
@@ -50,6 +52,7 @@ public class MenuFragment extends Fragment {
 
         floatingActionButton = view.findViewById(R.id.floating_button_menu);
         recyclerView = view.findViewById(R.id.menu_recycler_view);
+        noMenuText = view.findViewById(R.id.text_view_no_menu);
         menuList = new ArrayList<>();
 
         loadMenus(view);
@@ -68,18 +71,26 @@ public class MenuFragment extends Fragment {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         super.onContextItemSelected(item);
         switch (item.getItemId()) {
+            //Change Name
             case 10:
-                System.out.println("Change Name");
+                openMenuNameDialog(menuList.get(item.getGroupId()).getUuid());
                 return true;
+             //Delete
             case 20:
                 String uuid = menuList.get(item.getGroupId()).getUuid();
                 menuList.remove(item.getGroupId());
                 adapter.notifyDataSetChanged();
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid).removeValue();
+                loadMenus(view);
                 return true;
         }
         return false;
+    }
+
+    public void openMenuNameDialog(String uuid) {
+        ChangeMenuNameDialog changeMenuNameDialog = new ChangeMenuNameDialog(uuid);
+        changeMenuNameDialog.show(getFragmentManager(), "change menu name");
     }
 
     public static void loadMenus(final View view) {
@@ -109,6 +120,13 @@ public class MenuFragment extends Fragment {
                     Company.getInstance().getMenuList().add(menu);
 
                 }
+
+                if (menuList.size() == 0) {
+                    noMenuText.setVisibility(View.VISIBLE);
+                } else {
+                    noMenuText.setVisibility(View.GONE);
+                }
+
                 Collections.sort(menuList);
                 setRecyclerViewLayout(view);
             }

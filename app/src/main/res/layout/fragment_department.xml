@@ -18,4 +18,13 @@
         android:layout_marginBottom="12dp"
         android:src="@drawable/ic_add"/>
 
+    <TextView
+        android:id="@+id/text_view_no_department"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No Department Has Been Founded"
+        android:textSize="20sp"
+        android:visibility="gone"/>
+
 </RelativeLayout>

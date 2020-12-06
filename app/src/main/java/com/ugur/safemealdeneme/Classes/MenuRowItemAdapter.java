@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.ugur.safemealdeneme.R;
 
 import java.util.ArrayList;
@@ -61,14 +59,6 @@ public class MenuRowItemAdapter extends RecyclerView.Adapter<MenuRowItemAdapter.
             }
         });
 
-    }
-
-    public void removeItem(int position) {
-        String uuid = mMenuList.get(position).getUuid();
-        mMenuList.remove(position);
-        notifyDataSetChanged();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-        reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid).removeValue();
     }
 
     @Override

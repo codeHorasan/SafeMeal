@@ -1,10 +1,13 @@
 package com.ugur.safemealdeneme.Classes;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class Department {
     private String name;
     private String uuid;
+    private Date creationDate;
+    private String dateString;
 
     public Department(String name) {
         this.name = name;
@@ -27,4 +30,19 @@ public class Department {
         return uuid;
     }
 
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
 }
