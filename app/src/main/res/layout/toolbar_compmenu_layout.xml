@@ -5,12 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:theme="@style/AppTheme.NoActionBar"
-    android:id="@+id/toolbar_main_layout"
+    android:id="@+id/toolbar_company_menu"
     app:popupTheme="@style/AppTheme">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_back"
+        android:onClick="goBack"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/toolbar_image_view"
+        android:id="@+id/toolbar_compmenu_image"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="80dp"
         android:layout_height="match_parent"
@@ -20,7 +25,7 @@
         app:civ_border_color="#FFFFFF"/>
 
     <TextView
-        android:id="@+id/logo_text_view"
+        android:id="@+id/toolbar_compmenu_text"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:textColor="#FFFFFF"

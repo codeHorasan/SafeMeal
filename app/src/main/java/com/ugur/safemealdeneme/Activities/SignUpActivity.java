@@ -91,12 +91,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    /*private String getFileExtension(Uri uri) {
-        ContentResolver contentResolver = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }*/
-
     private boolean validateEmail() {
         String emailInput = emailText.getEditText().getText().toString().trim();
 
@@ -195,30 +189,6 @@ public class SignUpActivity extends AppCompatActivity {
                                     }
                                 });
                             }
-
-                            //Upload Image
-                            /*storageReference = FirebaseStorage.getInstance().getReference("logos");
-                            if (Company.getInstance().getImageUri() != null) {
-                                StorageReference fileReference = storageReference.child(company.getUUID()).child(company.getName()
-                                        + "." + getFileExtension(company.getImageUri()));
-
-                                fileReference.putFile(company.getImageUri()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        UploadImage uploadImage = new UploadImage(Company.getInstance().getUUID(), taskSnapshot..toString());
-                                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                        DatabaseReference reference = database.getReference();
-                                        reference.child("Companies").child(Company.getInstance().getUUID()).child("LogoUri").setValue(uploadImage.getImageUri());
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        StyleableToast.makeText(getApplicationContext(),e.getLocalizedMessage(),R.style.FailureToast).show();
-                                    }
-                                });
-                            } else {
-                                StyleableToast.makeText(getApplicationContext(),"No file selected",R.style.FailureToast).show();
-                            }*/
 
                             StyleableToast.makeText(getApplicationContext(),"Signed up successfully!", R.style.SuccessToast).show();
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));

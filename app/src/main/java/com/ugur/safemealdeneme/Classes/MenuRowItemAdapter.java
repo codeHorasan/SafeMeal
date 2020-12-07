@@ -1,5 +1,6 @@
 package com.ugur.safemealdeneme.Classes;
 
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ugur.safemealdeneme.Activities.CompanyMenuActivity;
+import com.ugur.safemealdeneme.Fragments.MenuFragment;
 import com.ugur.safemealdeneme.R;
 
 import java.util.ArrayList;
@@ -55,7 +58,11 @@ public class MenuRowItemAdapter extends RecyclerView.Adapter<MenuRowItemAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Menu Name: " + currentItem.getName() + "  ID: " + currentItem.getUuid());
+                //System.out.println("Menu Name: " + currentItem.getName() + "  ID: " + currentItem.getUuid());
+                Intent intent = new Intent(MenuFragment.view.getContext(), CompanyMenuActivity.class);
+                intent.putExtra("name",currentItem.getName());
+                intent.putExtra("uuid",currentItem.getUuid());
+                MenuFragment.view.getContext().startActivity(intent);
             }
         });
 
