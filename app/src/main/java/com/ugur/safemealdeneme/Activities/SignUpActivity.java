@@ -168,8 +168,7 @@ public class SignUpActivity extends AppCompatActivity {
                             if (Company.getInstance().getImageUri() != null) {
                                 storageReference.putFile(Company.getInstance().getImageUri()).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                                     @Override
-                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception
-                                    {
+                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                                         if (!task.isSuccessful()) {
                                             throw task.getException();
                                         }

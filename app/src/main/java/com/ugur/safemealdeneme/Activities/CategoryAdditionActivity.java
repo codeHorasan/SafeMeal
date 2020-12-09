@@ -1,5 +1,6 @@
 package com.ugur.safemealdeneme.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,15 +12,30 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
+import com.ugur.safemealdeneme.Classes.Company;
+import com.ugur.safemealdeneme.DepartmentConstantsClass;
 import com.ugur.safemealdeneme.R;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class CategoryAdditionActivity extends AppCompatActivity {
     private TextInputLayout inputText;
     private ImageView imageView;
     Uri imageUri;
+
+    public static String name;
+    public static String uuid;
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -28,8 +44,15 @@ public class CategoryAdditionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_addition);
 
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        uuid = intent.getStringExtra("uuid");
+
         inputText = findViewById(R.id.category_addition_name);
         imageView = findViewById(R.id.category_addition_image);
+
+        getSupportActionBar().setTitle("Add Category to " + name);
+
     }
 
     @Override
@@ -56,6 +79,52 @@ public class CategoryAdditionActivity extends AppCompatActivity {
     }
 
     public void addCategory(View view) {
+        if (inputText.getEditText().getText().toString().trim().equals("")) {
+            inputText.setError("Please give a name to your category");
+            return;
+        }
 
+        final String categoryName = inputText.getEditText().getText().toString().trim();
+        final String categoryUUID = UUID.randomUUID().toString();
+
+        final StorageReference storageReference = FirebaseStorage.getInstance().getReference("Categories").child(categoryUUID + ".");
+        //Checking if image is the default
+        if (imageUri == null) {
+            imageUri = Uri.parse("android.resource://com.ugur.safemealdeneme/" + R.drawable.logo);
+        }
+        storageReference.putFile(imageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return storageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+
+                    //Category category = new Category(categoryName, downloadUri, categoryUUID);
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference reference = database.getReference();
+                    reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid)
+                            .child("Categories").child(categoryUUID).child("name").setValue(categoryName);
+
+                    reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid)
+                            .child("Categories").child(categoryUUID).child("imageUri").setValue(downloadUri.toString());
+
+                    reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid)
+                            .child("Categories").child(categoryUUID).child("order").setValue(String.valueOf(DepartmentConstantsClass.MENU_CATEGORIES_SIZE));
+
+                    finish();
+
+                } else {
+                    StyleableToast.makeText(getApplicationContext(), "Error!", R.style.FailureToast).show();
+                }
+            }
+        });
     }
 }

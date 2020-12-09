@@ -8,6 +8,7 @@
     tools:context=".Activities.CompanyMenuActivity">
 
     <include layout="@layout/toolbar_compmenu_layout"/>
+    <include layout="@layout/toolbar_action_category_deletion"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -9,9 +9,6 @@ public class ProductBasket {
         this.servings = servings;
     }
 
-    public ProductBasket(Object productId, Object servings) {
-    }
-
     public int getProductId() {
         return productId;
     }

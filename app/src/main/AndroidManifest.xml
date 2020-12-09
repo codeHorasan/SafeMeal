@@ -3,6 +3,7 @@
     package="com.ugur.safemealdeneme">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -12,11 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.CategoryAdditionActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".Activities.CompanyMenuActivity"></activity>
         <activity
             android:name=".Activities.CompanyMenuActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.CategoryCreationActivity" />
         <activity
             android:name=".Activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
