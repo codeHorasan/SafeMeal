@@ -5,6 +5,7 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 public class Company {
+    //Defining variables
     String email;
     String name;
     String UUID;
@@ -13,12 +14,12 @@ public class Company {
     Uri imageUri;
 
     private static Company company;
-
+// Getting menu list and department list
     private Company() {
         departmentList = new ArrayList<>();
         menuList = new ArrayList<>();
     }
-
+//Getters and Setters
     public String getEmail() {
         return email;
     }
@@ -66,7 +67,7 @@ public class Company {
     public void setImageUri(Uri imageUri) {
         this.imageUri = imageUri;
     }
-
+// Gets Context(or isntance) of Company, if null make one
     public static Company getInstance() {
         if (company == null) {
             company = new Company();
