@@ -3,17 +3,17 @@ package com.ugur.safemealdeneme.Classes;
 import android.net.Uri;
 
 public class Category {
-
+//Defining variables
     private String name;
     private Uri image;
     private String uuid;
-
+//setting up constructor
     public Category(String name, Uri image, String uuid) {
         this.name = name;
         this.image = image;
         this.uuid = uuid;
     }
-
+// Gtters and Setters
     public String getName() {
         return name;
     }
