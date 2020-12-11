@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Product {
-
+//Defining Variables
     private int productId;
     private String name, description, image;
     private double price;
@@ -9,7 +9,7 @@ public class Product {
 
     public Product() {
     }
-
+// Setting up constructors
     public Product(int productId, String name, String description, double price, List<String> imageList) {
         this.productId = productId;
         this.name = name;
@@ -23,17 +23,7 @@ public class Product {
         this.image = image;
         this.price = price;
     }
-
-   
-
-    public int getBasketID() {
-        return basketID;
-    }
-
-    public void setBasketID(int basketID) {
-        this.basketID = basketID;
-    }
-
+//Getters and Setters
     public String getImage() {
         return image;
     }
