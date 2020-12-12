@@ -21,8 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ugur.safemealdeneme.Classes.Company;
 import com.ugur.safemealdeneme.Classes.Menu;
-import com.ugur.safemealdeneme.Classes.MenuRowItem;
-import com.ugur.safemealdeneme.Classes.MenuRowItemAdapter;
+import com.ugur.safemealdeneme.Models.MenuRowModel;
+import com.ugur.safemealdeneme.Adapters.MenuRowItemAdapter;
 import com.ugur.safemealdeneme.Dialogs.ChangeMenuNameDialog;
 import com.ugur.safemealdeneme.Dialogs.MenuCreationDialog;
 import com.ugur.safemealdeneme.R;
@@ -39,7 +39,7 @@ public class MenuFragment extends Fragment {
     static RecyclerView recyclerView;
     static RecyclerView.Adapter adapter;
     static RecyclerView.LayoutManager manager;
-    static ArrayList<MenuRowItem> menuList;
+    static ArrayList<MenuRowModel> menuList;
     public static View view;
 
     public MenuFragment() {
@@ -113,7 +113,7 @@ public class MenuFragment extends Fragment {
                     menu.setDateString(dateString);
                     try {
                         menu.setCreationDate(sdf.parse(menu.getDateString()));
-                        menuList.add(new MenuRowItem(name,uuid,sdf.parse(menu.getDateString())));
+                        menuList.add(new MenuRowModel(name,uuid,sdf.parse(menu.getDateString())));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }

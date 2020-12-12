@@ -27,8 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.squareup.picasso.Picasso;
 import com.ugur.safemealdeneme.Classes.Company;
-import com.ugur.safemealdeneme.Classes.CompanyMenuCategoryItem;
-import com.ugur.safemealdeneme.Classes.CompanyMenuCategoryItemAdapter;
+import com.ugur.safemealdeneme.Models.CompanyMenuCategoryModel;
+import com.ugur.safemealdeneme.Adapters.CompanyMenuCategoryItemAdapter;
 import com.ugur.safemealdeneme.DepartmentConstantsClass;
 import com.ugur.safemealdeneme.R;
 
@@ -43,12 +43,12 @@ public class CompanyMenuActivity extends AppCompatActivity {
     TextView textMenu;
     RecyclerView recyclerView;
     CompanyMenuCategoryItemAdapter adapter;
-    ArrayList<CompanyMenuCategoryItem> categoryItems;
+    ArrayList<CompanyMenuCategoryModel> categoryItems;
     FloatingActionButton floatingActionButton;
 
     public static boolean ifActionMode = false;
-    public static ArrayList<CompanyMenuCategoryItem> deletionItems;
-    private  ArrayList<CompanyMenuCategoryItem> deletionCopies;
+    public static ArrayList<CompanyMenuCategoryModel> deletionItems;
+    private  ArrayList<CompanyMenuCategoryModel> deletionCopies;
     private ItemTouchHelper itemTouchHelper;
 
     public static Context context;
@@ -125,7 +125,7 @@ public class CompanyMenuActivity extends AppCompatActivity {
     public void reorderAfterDeletion() {
         final int[] biggest = {0};
         final ArrayList<Integer> deletedPositions = new ArrayList<>();
-        for (CompanyMenuCategoryItem deletedItem : deletionCopies) {
+        for (CompanyMenuCategoryModel deletedItem : deletionCopies) {
             deletedPositions.add(deletedItem.getSortingOrder());
         }
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -195,7 +195,7 @@ public class CompanyMenuActivity extends AppCompatActivity {
         if (deletionItems.size() > 0) {
             deletionCopies = new ArrayList<>(deletionItems);
             System.out.println(deletionCopies);
-            for (CompanyMenuCategoryItem item : deletionItems) {
+            for (CompanyMenuCategoryModel item : deletionItems) {
                 //Delete from DB
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
                 reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid).child("Categories")
@@ -218,10 +218,6 @@ public class CompanyMenuActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
-            /*case R.id.company_category_deletion:
-                deleteCategories();
-                ifActionMode = false;
-                return true;*/
             case R.id.open_deletion_mode:
                 if (!ifActionMode) {
                     ifActionMode = true;
@@ -250,7 +246,7 @@ public class CompanyMenuActivity extends AppCompatActivity {
                     Uri imageUri = Uri.parse(map.get("imageUri"));
                     int categoryOrder = Integer.parseInt(map.get("order"));
                     String uuid = ds.getKey();
-                    categoryItems.add(new CompanyMenuCategoryItem(imageUri, categoryName, categoryOrder, uuid));
+                    categoryItems.add(new CompanyMenuCategoryModel(imageUri, categoryName, categoryOrder, uuid));
                 }
 
                 Collections.sort(categoryItems);
@@ -290,6 +286,10 @@ public class CompanyMenuActivity extends AppCompatActivity {
             int toPosition = target.getAdapterPosition();
             Collections.swap(categoryItems, fromPosition, toPosition);
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+
+            //Change Orders on DB
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+            System.out.println("From Position: " + fromPosition + "  toPosition: " + toPosition);
             return false;
         }
 

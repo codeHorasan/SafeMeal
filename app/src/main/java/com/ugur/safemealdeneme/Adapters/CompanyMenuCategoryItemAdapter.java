@@ -1,4 +1,4 @@
-package com.ugur.safemealdeneme.Classes;
+package com.ugur.safemealdeneme.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.ugur.safemealdeneme.Activities.CompanyMenuActivity;
+import com.ugur.safemealdeneme.Models.CompanyMenuCategoryModel;
 import com.ugur.safemealdeneme.R;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<CompanyMenuCategoryItemAdapter.CategoryItemViewHolder> {
-    private ArrayList<CompanyMenuCategoryItem> mCategoryItems;
+    private ArrayList<CompanyMenuCategoryModel> mCategoryItems;
     private OnItemLongClickListener mLongListener;
 
 
@@ -63,7 +64,7 @@ public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<Company
 
     }
 
-    public CompanyMenuCategoryItemAdapter(ArrayList<CompanyMenuCategoryItem> categoryItems) {
+    public CompanyMenuCategoryItemAdapter(ArrayList<CompanyMenuCategoryModel> categoryItems) {
         mCategoryItems = categoryItems;
     }
 
@@ -77,7 +78,7 @@ public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<Company
 
     @Override
     public void onBindViewHolder(@NonNull final CategoryItemViewHolder holder, final int position) {
-        final CompanyMenuCategoryItem currentItem = mCategoryItems.get(position);
+        final CompanyMenuCategoryModel currentItem = mCategoryItems.get(position);
         holder.textView.setText(currentItem.getCategoryName());
 
         Picasso.with(CompanyMenuActivity.context)

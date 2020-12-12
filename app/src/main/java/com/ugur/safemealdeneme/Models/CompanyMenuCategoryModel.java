@@ -1,14 +1,14 @@
-package com.ugur.safemealdeneme.Classes;
+package com.ugur.safemealdeneme.Models;
 
 import android.net.Uri;
 
-public class CompanyMenuCategoryItem implements Comparable<CompanyMenuCategoryItem> {
+public class CompanyMenuCategoryModel implements Comparable<CompanyMenuCategoryModel> {
     private Uri imageUri;
     private String categoryName;
     private int sortingOrder;
     private String uuid;
 
-    public CompanyMenuCategoryItem(Uri imageUri, String categoryName, int sortingOrder, String uuid) {
+    public CompanyMenuCategoryModel(Uri imageUri, String categoryName, int sortingOrder, String uuid) {
         this.imageUri = imageUri;
         this.categoryName = categoryName;
         this.sortingOrder = sortingOrder;
@@ -32,7 +32,7 @@ public class CompanyMenuCategoryItem implements Comparable<CompanyMenuCategoryIt
     }
 
     @Override
-    public int compareTo(CompanyMenuCategoryItem o) {
+    public int compareTo(CompanyMenuCategoryModel o) {
         if (this.sortingOrder < o.sortingOrder) {
             return 1;
         } else {

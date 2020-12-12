@@ -1,13 +1,13 @@
-package com.ugur.safemealdeneme.Classes;
+package com.ugur.safemealdeneme.Models;
 
 import java.util.Date;
 
-public class DepartmentRowItem implements Comparable<DepartmentRowItem> {
+public class DepartmentRowModel implements Comparable<DepartmentRowModel> {
     private String name;
     private String uuid;
     private Date date;
 
-    public DepartmentRowItem(String name, String uuid, Date date) {
+    public DepartmentRowModel(String name, String uuid, Date date) {
         this.name = name;
         this.uuid = uuid;
         this.date = date;
@@ -27,7 +27,7 @@ public class DepartmentRowItem implements Comparable<DepartmentRowItem> {
 
 
     @Override
-    public int compareTo(DepartmentRowItem o) {
+    public int compareTo(DepartmentRowModel o) {
         if (this.date.after(o.getDate())) {
             return 1;
         } else {

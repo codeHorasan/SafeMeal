@@ -1,4 +1,4 @@
-package com.ugur.safemealdeneme.Classes;
+package com.ugur.safemealdeneme.Adapters;
 
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -10,12 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ugur.safemealdeneme.Models.DepartmentRowModel;
 import com.ugur.safemealdeneme.R;
 
 import java.util.ArrayList;
 
 public class DepartmentRowItemAdapter extends RecyclerView.Adapter<DepartmentRowItemAdapter.DepartmentRowItemHolder> {
-    ArrayList<DepartmentRowItem> mDepartmentList;
+    ArrayList<DepartmentRowModel> mDepartmentList;
 
     public static class DepartmentRowItemHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public TextView textViewDepartmentName;
@@ -36,7 +37,7 @@ public class DepartmentRowItemAdapter extends RecyclerView.Adapter<DepartmentRow
 
     }
 
-    public DepartmentRowItemAdapter(ArrayList<DepartmentRowItem> departmentList) {
+    public DepartmentRowItemAdapter(ArrayList<DepartmentRowModel> departmentList) {
         mDepartmentList = departmentList;
     }
 
@@ -50,7 +51,7 @@ public class DepartmentRowItemAdapter extends RecyclerView.Adapter<DepartmentRow
 
     @Override
     public void onBindViewHolder(@NonNull DepartmentRowItemHolder holder, int position) {
-        final DepartmentRowItem currentItem = mDepartmentList.get(position);
+        final DepartmentRowModel currentItem = mDepartmentList.get(position);
         holder.textViewDepartmentName.setText(currentItem.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

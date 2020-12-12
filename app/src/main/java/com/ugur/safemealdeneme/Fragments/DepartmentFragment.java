@@ -21,8 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ugur.safemealdeneme.Classes.Company;
 import com.ugur.safemealdeneme.Classes.Department;
-import com.ugur.safemealdeneme.Classes.DepartmentRowItem;
-import com.ugur.safemealdeneme.Classes.DepartmentRowItemAdapter;
+import com.ugur.safemealdeneme.Models.DepartmentRowModel;
+import com.ugur.safemealdeneme.Adapters.DepartmentRowItemAdapter;
 import com.ugur.safemealdeneme.Dialogs.ChangeDepartmentNameDialog;
 import com.ugur.safemealdeneme.Dialogs.DepartmentCreationDialog;
 import com.ugur.safemealdeneme.R;
@@ -38,7 +38,7 @@ public class DepartmentFragment extends Fragment {
     static RecyclerView recyclerView;
     static RecyclerView.Adapter adapter;
     static RecyclerView.LayoutManager manager;
-    static ArrayList<DepartmentRowItem> departmentList;
+    static ArrayList<DepartmentRowModel> departmentList;
     public static View view;
     private static TextView noDepartmentText;
 
@@ -113,7 +113,7 @@ public class DepartmentFragment extends Fragment {
                     department.setDateString(dateString);
                     try {
                         department.setCreationDate(sdf.parse(department.getDateString()));
-                        departmentList.add(new DepartmentRowItem(name,uuid,sdf.parse(department.getDateString())));
+                        departmentList.add(new DepartmentRowModel(name,uuid,sdf.parse(department.getDateString())));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }

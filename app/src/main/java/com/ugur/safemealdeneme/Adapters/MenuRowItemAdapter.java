@@ -1,4 +1,4 @@
-package com.ugur.safemealdeneme.Classes;
+package com.ugur.safemealdeneme.Adapters;
 
 import android.content.Intent;
 import android.view.ContextMenu;
@@ -12,13 +12,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ugur.safemealdeneme.Activities.CompanyMenuActivity;
+import com.ugur.safemealdeneme.Models.MenuRowModel;
 import com.ugur.safemealdeneme.Fragments.MenuFragment;
 import com.ugur.safemealdeneme.R;
 
 import java.util.ArrayList;
 
 public class MenuRowItemAdapter extends RecyclerView.Adapter<MenuRowItemAdapter.MenuRowItemViewHolder> {
-    ArrayList<MenuRowItem> mMenuList;
+    ArrayList<MenuRowModel> mMenuList;
 
     public static class MenuRowItemViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public TextView textViewMenuName;
@@ -39,7 +40,7 @@ public class MenuRowItemAdapter extends RecyclerView.Adapter<MenuRowItemAdapter.
 
     }
 
-    public MenuRowItemAdapter(ArrayList<MenuRowItem> menuList) {
+    public MenuRowItemAdapter(ArrayList<MenuRowModel> menuList) {
         mMenuList = menuList;
     }
 
@@ -53,7 +54,7 @@ public class MenuRowItemAdapter extends RecyclerView.Adapter<MenuRowItemAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final MenuRowItemViewHolder holder, int position) {
-        final MenuRowItem currentItem = mMenuList.get(position);
+        final MenuRowModel currentItem = mMenuList.get(position);
         holder.textViewMenuName.setText(currentItem.getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
