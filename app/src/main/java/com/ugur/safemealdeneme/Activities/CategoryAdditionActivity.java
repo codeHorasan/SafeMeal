@@ -23,10 +23,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.ugur.safemealdeneme.Classes.Company;
-import com.ugur.safemealdeneme.DepartmentConstantsClass;
 import com.ugur.safemealdeneme.R;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 public class CategoryAdditionActivity extends AppCompatActivity {
@@ -105,7 +107,8 @@ public class CategoryAdditionActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
                     Uri downloadUri = task.getResult();
-
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+                    String currentDateTime = sdf.format(new Date());
                     //Category category = new Category(categoryName, downloadUri, categoryUUID);
 
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -117,7 +120,7 @@ public class CategoryAdditionActivity extends AppCompatActivity {
                             .child("Categories").child(categoryUUID).child("imageUri").setValue(downloadUri.toString());
 
                     reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid)
-                            .child("Categories").child(categoryUUID).child("order").setValue(String.valueOf(DepartmentConstantsClass.MENU_CATEGORIES_SIZE));
+                            .child("Categories").child(categoryUUID).child("DateTime").setValue(currentDateTime);
 
                     finish();
 

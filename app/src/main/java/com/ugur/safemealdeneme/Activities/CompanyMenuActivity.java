@@ -122,47 +122,6 @@ public class CompanyMenuActivity extends AppCompatActivity {
         loadCategories();
     }
 
-    public void reorderAfterDeletion() {
-        final int[] biggest = {0};
-        final ArrayList<Integer> deletedPositions = new ArrayList<>();
-        for (CompanyMenuCategoryModel deletedItem : deletionCopies) {
-            deletedPositions.add(deletedItem.getSortingOrder());
-        }
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference deletionReference = database.getReference("Companies").child(Company.getInstance().getUUID())
-                .child("Menus").child(uuid).child("Categories");
-        deletionReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    HashMap<String,String> map = (HashMap<String, String>) ds.getValue();
-                    String categoryUUID = ds.getKey();
-                    int sortingPosition = Integer.parseInt(map.get("order"));
-                    int count = 0;
-                    if (biggest[0] < sortingPosition) {
-                        biggest[0] = sortingPosition;
-                    }
-                    for (int i=0; i<deletedPositions.size(); i++) {
-                        if (deletedPositions.get(i) < sortingPosition) {
-                            count++;
-                        }
-                    }
-                    sortingPosition -= count;
-                    DepartmentConstantsClass.MENU_CATEGORIES_SIZE = biggest[0];
-                    DatabaseReference reorderReference = FirebaseDatabase.getInstance().getReference();
-                    reorderReference.child("Companies").child(Company.getInstance().getUUID()).child("Menus")
-                            .child(uuid).child("Categories").child(categoryUUID).child("order").setValue(String.valueOf(sortingPosition));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-
-    }
-
     public void cancelCategoryDeletionMode(View view) {
         ifActionMode = false;
         toolbarNormal.setVisibility(View.VISIBLE);
@@ -177,11 +136,6 @@ public class CompanyMenuActivity extends AppCompatActivity {
         toolbarDeletion.setVisibility(View.GONE);
         toolbarNormal.setVisibility(View.VISIBLE);
         floatingActionButton.setVisibility(View.VISIBLE);
-        if (deletionCopies != null) {
-            reorderAfterDeletion();
-            //categoryItems.clear();
-            //loadCategories();
-        }
     }
 
     @Override
@@ -194,7 +148,6 @@ public class CompanyMenuActivity extends AppCompatActivity {
     public void deleteCategories() {
         if (deletionItems.size() > 0) {
             deletionCopies = new ArrayList<>(deletionItems);
-            System.out.println(deletionCopies);
             for (CompanyMenuCategoryModel item : deletionItems) {
                 //Delete from DB
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -244,13 +197,12 @@ public class CompanyMenuActivity extends AppCompatActivity {
                     HashMap<String,String> map = (HashMap<String, String>) ds.getValue();
                     String categoryName = map.get("name");
                     Uri imageUri = Uri.parse(map.get("imageUri"));
-                    int categoryOrder = Integer.parseInt(map.get("order"));
                     String uuid = ds.getKey();
-                    categoryItems.add(new CompanyMenuCategoryModel(imageUri, categoryName, categoryOrder, uuid));
+                    String dateString = map.get("DateTime");
+                    categoryItems.add(new CompanyMenuCategoryModel(imageUri, categoryName, dateString, uuid));
                 }
 
                 Collections.sort(categoryItems);
-                DepartmentConstantsClass.MENU_CATEGORIES_SIZE = categoryItems.size();
                 buildAdapter();
             }
 
@@ -267,36 +219,48 @@ public class CompanyMenuActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        //On Long Click
-        adapter.setOnItemLongClickListener(new CompanyMenuCategoryItemAdapter.OnItemLongClickListener() {
-            @Override
-            public void onItemLongClick(int position) {
-                System.out.println("Adı: " + categoryItems.get(position).getCategoryName());
-            }
-        });
-
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
-            ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT | ItemTouchHelper.START | ItemTouchHelper.END,0) {
+            ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT,0) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             int fromPosition = viewHolder.getAdapterPosition();
             int toPosition = target.getAdapterPosition();
-            Collections.swap(categoryItems, fromPosition, toPosition);
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
 
-            //Change Orders on DB
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-            System.out.println("From Position: " + fromPosition + "  toPosition: " + toPosition);
-            return false;
+            if (fromPosition < toPosition) {
+                for (int i = fromPosition; i < toPosition; i++) {
+                    String swapHelper = categoryItems.get(i).getDateString();
+                    categoryItems.get(i).setDateString(categoryItems.get(i+1).getDateString());
+                    categoryItems.get(i+1).setDateString(swapHelper);
+                    Collections.swap(categoryItems, i, i + 1);
+                }
+            } else {
+                for (int i = fromPosition; i > toPosition; i--) {
+                    String swapHelper = categoryItems.get(i).getDateString();
+                    categoryItems.get(i).setDateString(categoryItems.get(i-1).getDateString());
+                    categoryItems.get(i-1).setDateString(swapHelper);
+                    Collections.swap(categoryItems, i, i - 1);
+                }
+            }
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference reference = database.getReference();
+            for (CompanyMenuCategoryModel model : categoryItems) {
+                reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(uuid).child("Categories")
+                        .child(model.getUuid()).child("DateTime").setValue(model.getDateString());
+            }
+
+            adapter.notifyItemMoved(fromPosition,toPosition);
+
+            return true;
         }
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         }
     };
+
 
     public void goBack(View view) {
         finish();

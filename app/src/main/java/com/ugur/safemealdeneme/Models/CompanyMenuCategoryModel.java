@@ -2,16 +2,19 @@ package com.ugur.safemealdeneme.Models;
 
 import android.net.Uri;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CompanyMenuCategoryModel implements Comparable<CompanyMenuCategoryModel> {
     private Uri imageUri;
     private String categoryName;
-    private int sortingOrder;
+    private String dateString;
     private String uuid;
 
-    public CompanyMenuCategoryModel(Uri imageUri, String categoryName, int sortingOrder, String uuid) {
+    public CompanyMenuCategoryModel(Uri imageUri, String categoryName, String dateString, String uuid) {
         this.imageUri = imageUri;
         this.categoryName = categoryName;
-        this.sortingOrder = sortingOrder;
+        this.dateString = dateString;
         this.uuid = uuid;
     }
 
@@ -23,8 +26,12 @@ public class CompanyMenuCategoryModel implements Comparable<CompanyMenuCategoryM
         return categoryName;
     }
 
-    public int getSortingOrder() {
-        return sortingOrder;
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+
+    public String getDateString() {
+        return dateString;
     }
 
     public String getUuid() {
@@ -33,10 +40,20 @@ public class CompanyMenuCategoryModel implements Comparable<CompanyMenuCategoryM
 
     @Override
     public int compareTo(CompanyMenuCategoryModel o) {
-        if (this.sortingOrder < o.sortingOrder) {
-            return 1;
-        } else {
-            return -1;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        try {
+            Date thisDate = sdf.parse(this.dateString);
+            Date otherDate = sdf.parse(o.dateString);
+            if (thisDate.before(otherDate)) {
+                return 1;
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Date Parsing Exception");
         }
+
+        return 0;
     }
 }

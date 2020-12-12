@@ -21,17 +21,6 @@ import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<CompanyMenuCategoryItemAdapter.CategoryItemViewHolder> {
     private ArrayList<CompanyMenuCategoryModel> mCategoryItems;
-    private OnItemLongClickListener mLongListener;
-
-
-
-    public interface OnItemLongClickListener {
-        void onItemLongClick(int position);
-    }
-
-    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
-        mLongListener = listener;
-    }
 
 
     public static class CategoryItemViewHolder extends RecyclerView.ViewHolder {
@@ -39,27 +28,11 @@ public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<Company
         public TextView textView;
         public CheckBox checkBox;
 
-        public CategoryItemViewHolder(@NonNull View itemView, final OnItemLongClickListener listener) {
+        public CategoryItemViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.menu_category_image_view);
             textView = itemView.findViewById(R.id.menu_category_text);
             checkBox = itemView.findViewById(R.id.check_box_category);
-
-            imageView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemLongClick(position);
-                            return true;
-                        }
-                    }
-
-                    return false;
-                }
-            });
-
         }
 
     }
@@ -72,7 +45,7 @@ public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<Company
     @Override
     public CategoryItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_category_item, parent,false);
-        CategoryItemViewHolder categoryItemViewHolder = new CategoryItemViewHolder(view, mLongListener);
+        CategoryItemViewHolder categoryItemViewHolder = new CategoryItemViewHolder(view);
         return categoryItemViewHolder;
     }
 
@@ -114,10 +87,10 @@ public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<Company
                     holder.checkBox.setChecked(false);
                     holder.checkBox.setVisibility(View.INVISIBLE);
                     CompanyMenuActivity.deletionItems.clear();
+
                 }
             }
         });
-
 
     }
 

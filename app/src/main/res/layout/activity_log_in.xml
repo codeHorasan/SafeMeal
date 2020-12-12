@@ -64,7 +64,8 @@
             android:text="Login"
             android:textSize="20sp"
             android:textAllCaps="false"
-            android:onClick="confirmLogin"/>
+            android:onClick="confirmLogin"
+            android:backgroundTint="@color/colorPrimary"/>
 
     </LinearLayout>
 
