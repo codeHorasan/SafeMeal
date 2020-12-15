@@ -12,7 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CompanyMenuProductsActivity"></activity>
+        <activity android:name=".Activities.DepartmentActivity"></activity>
+        <activity android:name=".Activities.ChangeProductActivity" />
+        <activity
+            android:name=".Activities.ProductAdditionActivity"
+            android:parentActivityName=".Activities.CompanyMenuProductsActivity" />
+        <activity
+            android:name=".Activities.CompanyMenuProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.CategoryAdditionActivity"
             android:parentActivityName=".Activities.CompanyMenuActivity" />

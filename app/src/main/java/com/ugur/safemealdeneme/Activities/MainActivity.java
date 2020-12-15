@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         textLogo = findViewById(R.id.logo_text_view);
         setSupportActionBar(toolbar);
 
-        System.out.println("Toolbar: " +toolbar);
-
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
         departmentFragment = new DepartmentFragment();

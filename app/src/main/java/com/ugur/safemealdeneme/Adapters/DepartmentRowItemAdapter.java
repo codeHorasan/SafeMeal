@@ -1,5 +1,6 @@
 package com.ugur.safemealdeneme.Adapters;
 
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ugur.safemealdeneme.Activities.DepartmentActivity;
 import com.ugur.safemealdeneme.Models.DepartmentRowModel;
 import com.ugur.safemealdeneme.R;
 
@@ -56,7 +58,10 @@ public class DepartmentRowItemAdapter extends RecyclerView.Adapter<DepartmentRow
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Department Name: " + currentItem.getName() + "  ID: " + currentItem.getUuid());
+                Intent intent = new Intent(v.getContext(), DepartmentActivity.class);
+                intent.putExtra("name",currentItem.getName());
+                intent.putExtra("id",currentItem.getUuid());
+                v.getContext().startActivity(intent);
             }
         });
     }

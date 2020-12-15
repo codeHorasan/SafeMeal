@@ -79,14 +79,13 @@ public class CompanyMenuActivity extends AppCompatActivity {
         name = intent.getStringExtra("name");
         uuid = intent.getStringExtra("uuid");
 
-
-        if (name != null && uuid != null) {
-            DepartmentConstantsClass.CURRENT_CATEGORY_NAME = name;
-            DepartmentConstantsClass.CURRENT_CATEGORY_UUID = uuid;
-        } else {
-            name = DepartmentConstantsClass.CURRENT_CATEGORY_NAME;
-            uuid = DepartmentConstantsClass.CURRENT_CATEGORY_UUID;
+        if (name == null) {
+            name = DepartmentConstantsClass.CURRENT_MENU_NAME;
+            uuid = DepartmentConstantsClass.CURRENT_MENU_UUID;
         }
+
+        DepartmentConstantsClass.CURRENT_MENU_NAME = name;
+        DepartmentConstantsClass.CURRENT_MENU_UUID = uuid;
 
         //Loading Image
         Picasso.with(getApplicationContext())

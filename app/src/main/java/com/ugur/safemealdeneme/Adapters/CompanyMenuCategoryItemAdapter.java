@@ -1,5 +1,6 @@
 package com.ugur.safemealdeneme.Adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.ugur.safemealdeneme.Activities.CompanyMenuActivity;
+import com.ugur.safemealdeneme.Activities.CompanyMenuProductsActivity;
 import com.ugur.safemealdeneme.Models.CompanyMenuCategoryModel;
 import com.ugur.safemealdeneme.R;
 
@@ -87,7 +89,10 @@ public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<Company
                     holder.checkBox.setChecked(false);
                     holder.checkBox.setVisibility(View.INVISIBLE);
                     CompanyMenuActivity.deletionItems.clear();
-
+                    Intent intent = new Intent(v.getContext(), CompanyMenuProductsActivity.class);
+                    intent.putExtra("uuid", currentItem.getUuid());
+                    intent.putExtra("name", currentItem.getCategoryName());
+                    v.getContext().startActivity(intent);
                 }
             }
         });
