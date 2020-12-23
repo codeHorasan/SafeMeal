@@ -68,7 +68,6 @@ public class ChangeProductActivity extends AppCompatActivity {
         try {
             productUri = Uri.parse(intent.getStringExtra("productImageURI"));
             newImageUri = productUri;
-            System.out.println("Taken Product URI: " + productUri);
         } catch (Exception e) {
             System.out.println("URI Alınamadı");
         }
@@ -135,32 +134,43 @@ public class ChangeProductActivity extends AppCompatActivity {
 
         if (checkBox.isChecked()) {
             if (newImageUri != null) {
-                String randomImageID = UUID.randomUUID().toString();
-                final StorageReference storageReference = FirebaseStorage.getInstance().getReference("products").child(randomImageID + ".");
-                storageReference.putFile(newImageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                    @Override
-                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                        if (!task.isSuccessful()) {
-                            throw task.getException();
+                if (newImageUri == productUri) {
+                    finish();
+                } else {
+                    String randomImageID = UUID.randomUUID().toString();
+                    final StorageReference storageReference = FirebaseStorage.getInstance().getReference("products").child(randomImageID + ".");
+                    storageReference.putFile(newImageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+                            return storageReference.getDownloadUrl();
                         }
-                        return storageReference.getDownloadUrl();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Uri> task) {
-                        if (task.isSuccessful()) {
-                            Uri downloadUri = task.getResult();
-                            reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(DepartmentConstantsClass.CURRENT_MENU_UUID)
-                                    .child("Categories").child(categoryID).child("Products").child(productID).child("imageUri").setValue(downloadUri.toString());
-                            finish();
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
+                                reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(DepartmentConstantsClass.CURRENT_MENU_UUID)
+                                        .child("Categories").child(categoryID).child("Products").child(productID).child("imageUri").setValue(downloadUri.toString());
+                                finish();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             } else {
                 StyleableToast.makeText(getApplicationContext(),"Please select an image",R.style.FailureToast).show();
                 return;
             }
         } else {
+            try {
+                reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(DepartmentConstantsClass.CURRENT_MENU_UUID)
+                        .child("Categories").child(categoryID).child("Products").child(productID).child("imageUri").removeValue();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             finish();
         }
 

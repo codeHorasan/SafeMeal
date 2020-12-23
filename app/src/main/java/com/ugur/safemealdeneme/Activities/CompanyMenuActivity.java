@@ -215,9 +215,9 @@ public class CompanyMenuActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         adapter = new CompanyMenuCategoryItemAdapter(categoryItems);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-        recyclerView.setAdapter(adapter);
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN |
@@ -252,6 +252,11 @@ public class CompanyMenuActivity extends AppCompatActivity {
 
             adapter.notifyItemMoved(fromPosition,toPosition);
 
+            return false;
+        }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
             return true;
         }
 

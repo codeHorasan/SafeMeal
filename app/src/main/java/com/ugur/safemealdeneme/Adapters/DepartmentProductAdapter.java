@@ -59,7 +59,6 @@ public class DepartmentProductAdapter extends RecyclerView.Adapter<DepartmentPro
     @Override
     public void onBindViewHolder(@NonNull DepartmentProductViewHolder holder, final int position) {
         final DepartmentProductModel currentItem = mProductList.get(position);
-        System.out.println("Adaptördeyim");
         holder.button.setVisibility(View.GONE);
         holder.title.setText(currentItem.getName());
         holder.description.setText(currentItem.getDescription());
@@ -82,7 +81,6 @@ public class DepartmentProductAdapter extends RecyclerView.Adapter<DepartmentPro
                 changeIntent.putExtra("productPrice",currentItem.getPrice());
                 changeIntent.putExtra("productDate",currentItem.getDateString());
                 if (currentItem.getImageUri() != null) {
-                    System.out.println("Current ITem Image Urı: " + currentItem.getImageUri());
                     changeIntent.putExtra("productImageURI",currentItem.getImageUri().toString());
                 } else {
                     System.out.println("Current Item has no Image Urı");
@@ -94,11 +92,18 @@ public class DepartmentProductAdapter extends RecyclerView.Adapter<DepartmentPro
         holder.deletion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*System.out.println("Deleted Position: " + position + "  deleted item name: " + currentItem.getName());
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference reference = database.getReference();
                 reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(DepartmentConstantsClass.CURRENT_MENU_UUID).child("Categories")
                         .child(CompanyMenuProductsActivity.categoryID).child("Products").child(currentItem.getProductId()).removeValue();
                 mProductList.remove(position);
+                notifyDataSetChanged();*/
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference reference = database.getReference();
+                reference.child("Companies").child(Company.getInstance().getUUID()).child("Menus").child(DepartmentConstantsClass.CURRENT_MENU_UUID).child("Categories")
+                        .child(CompanyMenuProductsActivity.categoryID).child("Products").child(currentItem.getProductId()).removeValue();
+                CompanyMenuProductsActivity.loadProducts();
                 notifyDataSetChanged();
             }
         });

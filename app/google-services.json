@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "1094819138843",
-    "firebase_url": "https://safemealdeneme.firebaseio.com",
-    "project_id": "safemealdeneme",
-    "storage_bucket": "safemealdeneme.appspot.com"
+    "project_number": "731331297813",
+    "project_id": "safe-meal-deneme2",
+    "storage_bucket": "safe-meal-deneme2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1094819138843:android:df37717abacf0832e617be",
+        "mobilesdk_app_id": "1:731331297813:android:78c1209bca10a56515441c",
         "android_client_info": {
           "package_name": "com.ugur.safemealdeneme"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1094819138843-611sr2fufohdsclalk8bp390km900m2h.apps.googleusercontent.com",
+          "client_id": "731331297813-nqgqodldvokbv768v0aovq9fgi0k6n1h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5llT7RV2iBE3Te_F1f70n6FzQD9M4mp8"
+          "current_key": "AIzaSyClJbmFUeNmSogO8Kki580zbLWx8RX6npQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1094819138843-611sr2fufohdsclalk8bp390km900m2h.apps.googleusercontent.com",
+              "client_id": "731331297813-nqgqodldvokbv768v0aovq9fgi0k6n1h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

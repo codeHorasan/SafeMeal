@@ -36,9 +36,9 @@ public class CompanyMenuProductsActivity extends AppCompatActivity {
     Toolbar toolbar;
     ImageView toolbarImageView;
     TextView textCategory;
-    RecyclerView recyclerView;
-    DepartmentProductAdapter adapter;
-    ArrayList<DepartmentProductModel> productList;
+    static RecyclerView recyclerView;
+    static DepartmentProductAdapter adapter;
+    static ArrayList<DepartmentProductModel> productList;
     FloatingActionButton floatingActionButton;
 
     public static Context context;
@@ -105,7 +105,7 @@ public class CompanyMenuProductsActivity extends AppCompatActivity {
         loadProducts();
     }
 
-    public void loadProducts() {
+    public static void loadProducts() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("Companies").child(Company.getInstance().getUUID()).child("Menus")
                 .child(DepartmentConstantsClass.CURRENT_MENU_UUID).child("Categories").child(categoryID).child("Products");
@@ -141,17 +141,16 @@ public class CompanyMenuProductsActivity extends AppCompatActivity {
         });
     }
 
-    public void buildAdapter() {
+    public static void buildAdapter() {
         recyclerView.setHasFixedSize(true);
         adapter = new DepartmentProductAdapter(productList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP |ItemTouchHelper.DOWN |
-             ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+    static ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP |ItemTouchHelper.DOWN, 0) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             int fromPosition = viewHolder.getAdapterPosition();
@@ -182,6 +181,11 @@ public class CompanyMenuProductsActivity extends AppCompatActivity {
 
             adapter.notifyItemMoved(fromPosition,toPosition);
 
+            return false;
+        }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
             return true;
         }
 
@@ -189,6 +193,7 @@ public class CompanyMenuProductsActivity extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         }
     };
+
 
     public void goBack(View view) {
         finish();

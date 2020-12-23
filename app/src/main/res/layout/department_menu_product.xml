@@ -6,7 +6,10 @@
     android:layout_height="80dp"
     android:backgroundTint="#FFFFFF"
     android:layout_marginBottom="3dp"
-    android:id="@+id/card_view_product">
+    android:contextClickable="true"
+    android:id="@+id/card_view_product"
+    android:background="@color/colorWhite"
+    android:foreground="?attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

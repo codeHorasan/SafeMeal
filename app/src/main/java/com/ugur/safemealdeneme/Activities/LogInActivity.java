@@ -41,6 +41,7 @@ public class LogInActivity extends AppCompatActivity {
                     intent.putExtra("Load","Yes");
                     startActivity(intent);
                     StyleableToast.makeText(getApplicationContext(),"Successful Login",R.style.SuccessToast).show();
+                    System.out.println("Giriş Yapıldı");
                 } else {
                     StyleableToast.makeText(getApplicationContext(),"Unsuccessful Login!",R.style.FailureToast).show();
                 }

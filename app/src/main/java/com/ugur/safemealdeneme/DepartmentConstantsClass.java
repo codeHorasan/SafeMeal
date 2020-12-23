@@ -5,4 +5,6 @@ public class DepartmentConstantsClass {
     public static String CURRENT_MENU_UUID;
     public static String CURRENT_CATEGORY_NAME;
     public static String CURRENT_CATEGORY_UUID;
+    public static String CURRENT_DEPARTMENT_NAME;
+    public static String CURRENT_DEPARTMENT_UUID;
 }
