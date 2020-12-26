@@ -1,10 +1,8 @@
 package com.ugur.safemealdeneme.Adapters;
 
-import android.Manifest;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+import android.media.MediaScannerConnection;
 import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 import com.ugur.safemealdeneme.Activities.QRCodeViewActivity;
-import com.ugur.safemealdeneme.Classes.Company;
 import com.ugur.safemealdeneme.Models.QRCodeVisualModel;
 import com.ugur.safemealdeneme.R;
 
@@ -101,6 +97,8 @@ public class QRCodeVisualAdapter extends RecyclerView.Adapter<QRCodeVisualAdapte
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                MediaScannerConnection.scanFile(v.getContext(), new String[]{file.getPath()}, new String[]{"image/jpeg"}, null);
 
                 StyleableToast.makeText(QRCodeViewActivity.context,"Downloaded Successfully!",R.style.SuccessToast).show();
             }

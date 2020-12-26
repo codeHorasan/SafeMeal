@@ -24,7 +24,6 @@ import jp.wasabeef.picasso.transformations.BlurTransformation;
 public class CompanyMenuCategoryItemAdapter extends RecyclerView.Adapter<CompanyMenuCategoryItemAdapter.CategoryItemViewHolder> {
     private ArrayList<CompanyMenuCategoryModel> mCategoryItems;
 
-
     public static class CategoryItemViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
         public TextView textView;

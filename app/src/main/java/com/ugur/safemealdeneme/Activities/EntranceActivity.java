@@ -1,10 +1,16 @@
 package com.ugur.safemealdeneme.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,6 +41,34 @@ public class EntranceActivity extends AppCompatActivity {
     }
 
     public void clickedReadQR(View view) {
-        startActivity(new Intent(getApplicationContext(), ReadQRActivity.class));
+        setUpPermissions();
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            startActivity(new Intent(getApplicationContext(), ReadQRActivity.class));
+        }
+    }
+
+    public void setUpPermissions() {
+        int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            makeRequest();
+        }
+    }
+
+    public void makeRequest() {
+        ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.CAMERA},100);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 100) {
+            if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this,"Kamera İzini Almanız Gerek!",Toast.LENGTH_LONG).show();
+            } else {
+                //Başarılı
+                startActivity(new Intent(getApplicationContext(), ReadQRActivity.class));
+            }
+        }
     }
 }

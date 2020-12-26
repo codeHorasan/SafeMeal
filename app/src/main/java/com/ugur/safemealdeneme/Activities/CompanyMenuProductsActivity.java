@@ -115,7 +115,6 @@ public class CompanyMenuProductsActivity extends AppCompatActivity {
                 productList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     HashMap<String,String> map = (HashMap<String, String>) ds.getValue();
-                    System.out.println("uri: " + map.get("imageUri"));
                     String name = map.get("name");
                     String description = map.get("description");
                     String dateString = map.get("DateTime");
