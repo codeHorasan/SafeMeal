@@ -44,7 +44,11 @@ public class CustomerMenuCategoryItemAdapter extends RecyclerView.Adapter<Custom
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
+                            try {
+                                listener.onItemClick(position);
+                            } catch (Exception e) {
+                                System.out.println("HATA: " + e.getCause());
+                            }
                         }
                     }
                 }

@@ -5,44 +5,39 @@ import android.net.Uri;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomerProductModel implements Comparable<CustomerProductModel> {
-    private String productId;
-    private String name, description;
+public class PanelProductModel implements Comparable<PanelProductModel> {
+    private String title;
+    private String description;
     private float price;
-    private Uri imageUri;
     private String dateString;
+    private String tableNo;
+    private Uri imageUri;
+    private String ID;
+    private boolean done = false;
 
-    public CustomerProductModel(String productId, String name, String description, float price, Uri imageUri, String dateString) {
-        this.productId = productId;
-        this.name = name;
+    public PanelProductModel(String title, String description, float price, String dateString, String tableNo) {
+        this.title = title;
         this.description = description;
         this.price = price;
+        this.dateString = dateString;
+        this.tableNo = tableNo;
+    }
+
+    public PanelProductModel(String title, String description, float price, String dateString, String tableNo, Uri imageUri) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.dateString = dateString;
+        this.tableNo = tableNo;
         this.imageUri = imageUri;
-        this.dateString = dateString;
     }
 
-    public CustomerProductModel(String productId, String name, String description, float price, String dateString) {
-        this.productId = productId;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.dateString = dateString;
+    public String getTitle() {
+        return title;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -61,14 +56,6 @@ public class CustomerProductModel implements Comparable<CustomerProductModel> {
         this.price = price;
     }
 
-    public Uri getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(Uri imageUri) {
-        this.imageUri = imageUri;
-    }
-
     public String getDateString() {
         return dateString;
     }
@@ -77,8 +64,40 @@ public class CustomerProductModel implements Comparable<CustomerProductModel> {
         this.dateString = dateString;
     }
 
+    public String getTableNo() {
+        return tableNo;
+    }
+
+    public void setTableNo(String tableNo) {
+        this.tableNo = tableNo;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public Uri getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(Uri imageUri) {
+        this.imageUri = imageUri;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
     @Override
-    public int compareTo(CustomerProductModel o) {
+    public int compareTo(PanelProductModel o) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
         try {
             Date thisDate = sdf.parse(this.dateString);

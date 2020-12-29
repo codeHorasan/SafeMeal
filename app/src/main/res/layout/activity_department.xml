@@ -1,49 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activities.DepartmentActivity">
 
-    <Spinner
-        android:id="@+id/spinner_menu_selection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
-        android:visibility="gone"
-        android:textAlignment="center"/>
+    <include layout="@layout/toolbar_compmenu_layout"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/menu_table_amount"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_below="@id/spinner_menu_selection"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        app:errorEnabled="true">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <Spinner
+            android:id="@+id/spinner_menu_selection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter amount of tables"
-            android:inputType="number"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_centerInParent="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:visibility="gone"
+            android:textAlignment="center"/>
 
-    <Button
-        android:id="@+id/button_set_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Set Menu For Department"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/menu_table_amount"
-        android:layout_marginTop="8dp"
-        android:onClick="setMenuForDepartment"
-        android:visibility="gone"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/menu_table_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_below="@id/spinner_menu_selection"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:errorEnabled="true">
 
-</RelativeLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter amount of tables"
+                android:inputType="number"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_set_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Set Menu For Department"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/menu_table_amount"
+            android:layout_marginTop="8dp"
+            android:onClick="setMenuForDepartment"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="8dp"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_button_delete_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
+            android:src="@drawable/ic_end_order"
+            android:tint="@color/colorWhite"
+            android:onClick="deleteTableOrders"/>
+    </RelativeLayout>
+
+
+</LinearLayout>
