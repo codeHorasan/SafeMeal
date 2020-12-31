@@ -185,7 +185,10 @@ public class DepartmentActivity extends AppCompatActivity {
                 }
 
                 Collections.sort(modelList);
-                buildAdapter();
+                if (tableAmountText.getVisibility() != View.VISIBLE) {
+                    buildAdapter();
+                }
+
             }
 
             @Override
@@ -243,9 +246,10 @@ public class DepartmentActivity extends AppCompatActivity {
         reference.child("Companies").child(Company.getInstance().getUUID()).child("Departments")
                 .child(departmentID).child("tableAmount").setValue(tableAmount);
 
-        menuSelectionSpinner.setVisibility(View.GONE);
-        tableAmountText.setVisibility(View.GONE);
-        button.setVisibility(View.GONE);
+        menuSelectionSpinner.setVisibility(View.INVISIBLE);
+        tableAmountText.setVisibility(View.INVISIBLE);
+        button.setVisibility(View.INVISIBLE);
+        floatingActionButton.setVisibility(View.VISIBLE);
         getSupportActionBar().setTitle("Department " + departmentName);
         getSupportActionBar().show();
 
@@ -263,9 +267,10 @@ public class DepartmentActivity extends AppCompatActivity {
                     getSupportActionBar().hide();
                     setAdapter();
                 } else {
-                    menuSelectionSpinner.setVisibility(View.GONE);
-                    tableAmountText.setVisibility(View.GONE);
-                    button.setVisibility(View.GONE);
+                    menuSelectionSpinner.setVisibility(View.INVISIBLE);
+                    tableAmountText.setVisibility(View.INVISIBLE);
+                    button.setVisibility(View.INVISIBLE);
+                    floatingActionButton.setVisibility(View.VISIBLE);
                     getSupportActionBar().setTitle("Department " + departmentName);
                     DatabaseReference getMenuInfoRef = database.getReference("Companies").child(Company.getInstance().getUUID())
                             .child("Departments").child(departmentID);
@@ -310,6 +315,7 @@ public class DepartmentActivity extends AppCompatActivity {
                 menuSelectionSpinner.setVisibility(View.VISIBLE);
                 tableAmountText.setVisibility(View.VISIBLE);
                 button.setVisibility(View.VISIBLE);
+                floatingActionButton.setVisibility(View.INVISIBLE);
             }
 
             @Override

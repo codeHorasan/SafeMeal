@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         menuFragment = new MenuFragment();
         tabLayout.setupWithViewPager(viewPager);
 
-        System.out.println("On Create");
-
         Intent intent = getIntent();
         if (intent.getStringExtra("Load") != null && intent.getStringExtra("Load").equals("Yes")) {
             System.out.println("Load Data");
@@ -69,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             System.out.println("Get Logo");
             getLogo();
+            textLogo.setText(Company.getInstance().getName());
         }
 
     }

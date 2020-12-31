@@ -193,6 +193,7 @@ public class SignUpActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                           StyleableToast.makeText(getApplicationContext(),"Error!", R.style.FailureToast).show();
+                            System.out.println("Sebep: " + task.getException().getLocalizedMessage() + task.getException().getMessage());
                         }
                     }
                 });

@@ -97,7 +97,7 @@ public class CustomerProductAdapter extends RecyclerView.Adapter<CustomerProduct
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (CustomerProductModel model : mProductListFull) {
-                    if (model.getName().contains(filterPattern) || model.getDescription().contains(filterPattern)) {
+                    if (model.getName().toLowerCase().contains(filterPattern.toLowerCase()) || model.getDescription().toLowerCase().contains(filterPattern.toLowerCase())) {
                         filteredList.add(model);
                     }
                 }

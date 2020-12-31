@@ -59,7 +59,6 @@ public class MenuRowItemAdapter extends RecyclerView.Adapter<MenuRowItemAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //System.out.println("Menu Name: " + currentItem.getName() + "  ID: " + currentItem.getUuid());
                 Intent intent = new Intent(MenuFragment.view.getContext(), CompanyMenuActivity.class);
                 intent.putExtra("name",currentItem.getName());
                 intent.putExtra("uuid",currentItem.getUuid());

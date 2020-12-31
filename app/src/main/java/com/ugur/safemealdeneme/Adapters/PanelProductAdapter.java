@@ -71,7 +71,6 @@ public class PanelProductAdapter extends RecyclerView.Adapter<PanelProductAdapte
         holder.titleText.setText(currentItem.getTitle());
         holder.descriptionText.setText(currentItem.getDescription());
         holder.priceText.setText(currentItem.getPrice() + "$");
-        //holder.dateHourText.setText(currentItem.getDateString());
         holder.tableText.setText("Table " + currentItem.getTableNo());
 
         String dateString = currentItem.getDateString();
